@@ -5,7 +5,6 @@ module.exports = {
   theme: {
     extend: {
       colors:{
-      
         'background' : '#191c19',
         'bakcgroundVariant' : '#151515',
         'outline': "#8b938a",
@@ -25,8 +24,6 @@ module.exports = {
         'onTertiaryContainer' : "#ecdcff",
         'onError' : '#ffdad6',
         'onBackground' : '#e2e3de'
-
-      
       }
     },
   },

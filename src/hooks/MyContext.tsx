@@ -1,7 +1,5 @@
-import React, { createContext, useState, useEffect} from "react"
-import { FireImage} from "../pages/ImageList"
-import { UserImage } from "../pages/ImageUpload"
-import { Use } from "react-native-svg"
+import React, { createContext, useState, useEffect } from "react"
+import { FireImage } from "../pages/ImageList"
 import { fireBaseAuth } from "../../firebase-config"
 import { getApp } from "firebase/app"
 import { getDatabase, query, ref as dbRef, orderByChild, equalTo, onValue } from "firebase/database"
@@ -18,18 +16,18 @@ export type TravelSnapContextType = {
     isColumns: boolean
     checkLogin: boolean
     currentUserData: UserData | undefined
-    currentUserImageData: ImageData [] | undefined
+    currentUserImageData: ImageData[] | undefined
     readCurrentUserImageData: () => void
-    updateChanges: (hasChanges: true| false) => void
-    updateCurrentImage: (image: FireImage | undefined) => void 
-    updateCurrentImageData: (imageData: ImageData | undefined ) => void
+    updateChanges: (hasChanges: true | false) => void
+    updateCurrentImage: (image: FireImage | undefined) => void
+    updateCurrentImageData: (imageData: ImageData | undefined) => void
     updateCameraImage: (image: FireImage | undefined) => void
     updateNumberOfColumns: () => void
     updateCheckLogin: (value: boolean) => void
     updateCurrentUserData: (user: UserData | undefined) => void
 }
 
-export type ImageData ={
+export type ImageData = {
     imageName: string
     caption: string
     click: number
@@ -50,8 +48,8 @@ export type UserData = {
 }
 
 export const TravelSnapContext = createContext<TravelSnapContextType | null>(null)
-const TravelSnapProvider  = ({children}: { children: React.ReactNode}) =>{
-    const [dbImages, setDbImages ] = useState<FireImage[]>([])
+const TravelSnapProvider = ({ children }: { children: React.ReactNode }) => {
+    const [dbImages, setDbImages] = useState<FireImage[]>([])
     const [currentImage, setCurrentImage] = useState<FireImage | undefined>()
     const [cameraImage, setCameraImage] = useState<FireImage | undefined>()
     const [currentImageData, setCurrentImageData] = useState<ImageData | undefined>()
@@ -62,60 +60,59 @@ const TravelSnapProvider  = ({children}: { children: React.ReactNode}) =>{
     const [currentUserData, setCurrentUserData] = useState<UserData | undefined>()
     const [currentUserImageData, setCurrentUserImageData] = useState<ImageData[] | undefined>()
 
-    useEffect(() =>{
+    useEffect(() => {
         handleIsColumns()
     }, [numberOfColumns])
 
-    
-    const handleIsColumns = ( ) =>{
-        if (numberOfColumns == 2){
+    const handleIsColumns = () => {
+        if (numberOfColumns == 2) {
             setIsColumns(true)
-        }else{
+        } else {
             setIsColumns(false)
         }
-
     }
-    const updateChanges = (hasChanges: true | false) =>{
+
+    const updateChanges = (hasChanges: true | false) => {
         setListHasChanges(hasChanges)
     }
 
-    const updateCurrentImage = (image : FireImage | undefined) =>{
+    const updateCurrentImage = (image: FireImage | undefined) => {
         setCurrentImage(image)
     }
 
-    const updateCurrentImageData = (imageData : ImageData | undefined) =>{
+    const updateCurrentImageData = (imageData: ImageData | undefined) => {
         setCurrentImageData(imageData)
     }
 
-    const updateCameraImage =(image: FireImage | undefined) =>{
+    const updateCameraImage = (image: FireImage | undefined) => {
         setCameraImage(image)
     }
 
-    const updateCurrentUserData =(user:UserData | undefined) =>{
+    const updateCurrentUserData = (user: UserData | undefined) => {
         setCurrentUserData(user)
     }
 
-    const updateNumberOfColumns = () =>{
-        if(numberOfColumns == 2){
+    const updateNumberOfColumns = () => {
+        if (numberOfColumns == 2) {
             setNumberOfColumns(1)
-        }else{
+        } else {
             setNumberOfColumns(2)
         }
     }
 
-    const updateCheckLogin = (value: boolean) =>{
+    const updateCheckLogin = (value: boolean) => {
         setCheckLogin(value)
     }
 
-    const readCurrentUserImageData = () =>{
+    const readCurrentUserImageData = () => {
         let uniqueImageData: ImageData[] = []
         const user = fireBaseAuth.currentUser
         const myApp = getApp()
         const db = getDatabase(myApp)
         const userImagesData = query(dbRef(db, `imageData`), orderByChild("userID"), equalTo((user?.uid as string)))
-        onValue(userImagesData, (snapShot) =>{
-            snapShot.forEach((data) =>{
-                if(!uniqueImageData.includes(data.val())){
+        onValue(userImagesData, (snapShot) => {
+            snapShot.forEach((data) => {
+                if (!uniqueImageData.includes(data.val())) {
                     uniqueImageData.push(data.val())
                 }
             })
@@ -123,8 +120,8 @@ const TravelSnapProvider  = ({children}: { children: React.ReactNode}) =>{
 
         setCurrentUserImageData(uniqueImageData)
     }
-    return(
-        <TravelSnapContext.Provider  value={{dbImages, currentImage, cameraImage, currentImageData, currentUserData, currentUserImageData, listHasChanges, numberOfColumns, isColumns , checkLogin, updateChanges, updateCurrentImage, updateCurrentImageData, updateCameraImage, updateNumberOfColumns, updateCheckLogin, updateCurrentUserData, readCurrentUserImageData}}>
+    return (
+        <TravelSnapContext.Provider value={{ dbImages, currentImage, cameraImage, currentImageData, currentUserData, currentUserImageData, listHasChanges, numberOfColumns, isColumns, checkLogin, updateChanges, updateCurrentImage, updateCurrentImageData, updateCameraImage, updateNumberOfColumns, updateCheckLogin, updateCurrentUserData, readCurrentUserImageData }}>
             {children}
         </TravelSnapContext.Provider>
     )

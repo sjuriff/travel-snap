@@ -1,4 +1,4 @@
-import {useNavigation,NavigationProp} from"@react-navigation/native"
+import { useNavigation, NavigationProp } from "@react-navigation/native"
 
 type RouteList = {
     UploadImage: undefined
@@ -10,17 +10,16 @@ type RouteList = {
     CreateProfilePage: undefined
     ProfilePage: undefined
     Map: undefined
-    
 }
 
 type pictureNavigationProps = NavigationProp<RouteList>
 
-export const myNavigation = () =>{
+export const myNavigation = () => {
     const navigation = useNavigation<pictureNavigationProps>()
 
-    const navigate = (path: keyof RouteList) =>{
+    const navigate = (path: keyof RouteList) => {
         navigation.navigate(path)
     }
 
-    return{navigate, goBack: navigation.goBack}
+    return { navigate, goBack: navigation.goBack }
 }
