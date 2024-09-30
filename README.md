@@ -3,20 +3,18 @@ Travel Snap
 A Social Media platform where users can post their travel photos. Users can like, leave comments and create their own profile. Log in or create a user with email and password.
 
 Technologies:
-React-Native
-Firebase:
-  - Realtime database
-  - Storage
-  - Authentification
-Tailwind
+- React-Native
+- Firebase (Realtime database, Storage, Authentication)
+- Tailwind
 
 Features:
-User Authentification with Firebase
-React Context
-Take images or choose images from galleri with Expo (Expo ImagePicker)
-See where Images has been taken with Expo (MapView)
-Set current location or get latitude and longitude from written location with Expo (Location)
-
+- User Authentification with Firebase
+- React Context
+- Take images or choose images from galleri with Expo (Expo ImagePicker)
+- Upload images to Firebase Storage
+- Get images from Firebase Storage
+- Set current location or get latitude and longitude from written location with Expo (Location)
+- See where Images has been taken with Expo (MapView)
 
 TODO:
 A LOT! But i will not continue on this project. The firebase realtime database is no longer up and running. This was a school exam, and i knew the sensors would focus more
