@@ -1,8 +1,5 @@
-import { View, TouchableOpacity, Text, GestureResponderEvent } from "react-native"
+import { TouchableOpacity, Text, GestureResponderEvent } from "react-native"
 import { useEffect, useState } from "react"
-import { SvgProps } from "react-native-svg"
-
-
 
 type CustomButtonProps = {
     title: String
@@ -11,24 +8,24 @@ type CustomButtonProps = {
     iconName?: string,
     onPress?: (event: GestureResponderEvent) => void
     changeVariant?: boolean
-   
 }
-// en custom knapp som kan brukes om igjen, Kansje litt dumt å håndtere endring av variant i en useeffect
-//hadde en console.log inne i useeffectene og registrete at de kjørte ganske så ofte
-const CustomButton: React.FC<CustomButtonProps> = ({title, Icon, onPress, variant, iconName, changeVariant}) =>{
+//Ikke det beste å håndtere endring av variant i en useeffect.
+//Hadde en console.log inne i useeffectene og registrete at de kjørte ganske så ofte.
+const CustomButton: React.FC<CustomButtonProps> = ({ title, Icon, onPress, variant, iconName, changeVariant }) => {
     const [currentVariant, setCurrentVariant] = useState<string>()
     const [textColor, setTextColor] = useState<string>()
     const [iconColor, setIconColor] = useState<string>()
-    useEffect (() =>{
+
+    useEffect(() => {
         console.log("button useEffect")
         handleVariant()
 
     }, [currentVariant])
 
-    useEffect (() =>{
+    useEffect(() => {
         console.log("Roundedbutton useEffect")
         handleVariant()
-        
+
 
     }, [changeVariant])
 
@@ -39,7 +36,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({title, Icon, onPress, varian
                 setTextColor("text-onPrimary")
                 setIconColor("text-onPrimary")
                 break;
-        
+
             case "secondary":
                 setCurrentVariant("bg-secondary")
                 setTextColor("text-onSecondary")
@@ -62,10 +59,10 @@ const CustomButton: React.FC<CustomButtonProps> = ({title, Icon, onPress, varian
         }
     }
 
-    return(
+    return (
         <TouchableOpacity onPress={onPress} className={`py-3 px-5 flex-row items-center justify-center space-x-1 rounded-2xl ${currentVariant}`}>
             <Text className={` font-semibold ${textColor}`}>{title}</Text>
-             {Icon && <Icon className = {`${iconColor}`} name={iconName} size = {15}/>}
+            {Icon && <Icon className={`${iconColor}`} name={iconName} size={15} />}
         </TouchableOpacity>
 
     )
